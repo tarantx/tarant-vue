@@ -1,6 +1,6 @@
 {
   "name": "tarant-vue",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "vue renderer materializer for the tarant framework",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
