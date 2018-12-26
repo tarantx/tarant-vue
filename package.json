@@ -1,0 +1,57 @@
+{
+  "name": "tarant-vue",
+  "version": "0.0.1",
+  "description": "vue renderer materializer for the tarant framework",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "contributors": [
+    "Kevin Mas Ruiz <masruizkevin@gmail.com>",
+    "Kanekotic <alvarojosepl@gmail.com>"
+  ],
+  "repository": "git@github.com:tarantx/tarant-vue.git",
+  "license": "MIT",
+  "keywords": [
+    "actor system",
+    "actor",
+    "DDD",
+    "actor-system",
+    "vue"
+  ],
+  "scripts": {
+    "prepare": "yarn build",
+    "build": "tsc",
+    "format": "prettier --write \"**/*.ts\" && tslint -p tsconfig.json --fix lib/**/*.ts -t verbose",
+    "lint": "tslint -p tsconfig.json",
+    "test": "yarn format && yarn lint && jest test",
+    "test:dev": "jest --watchAll test",
+    "test:cov": "yarn format && yarn lint && jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "push": "yarn test && git push",
+    "deploy:major": "yarn version --major",
+    "deploy:minor": "yarn version --minor",
+    "deploy:patch": "yarn version --patch",
+    "deploy:push": "git push && git push --tags",
+    "preversion": "yarn test"
+  },
+  "devDependencies": {
+    "@types/faker": "4.1.4",
+    "@types/jest": "23.3.10",
+    "@types/node": "10.12.18",
+    "@types/vue": "2.0.0",
+    "coveralls": "3.0.2",
+    "faker": "4.1.0",
+    "jest": "23.6.0",
+    "prettier": "1.15.3",
+    "ts-jest": "23.10.5",
+    "tslib": "1.9.3",
+    "tslint": "5.12.0",
+    "tslint-config-prettier": "1.17.0",
+    "typescript": "3.2.2"
+  },
+  "dependencies": {
+    "tarant": "2.1.9",
+    "vue": "2.5.21"
+  },
+  "jest": {
+    "preset": "ts-jest"
+  }
+}
