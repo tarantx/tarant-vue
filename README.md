@@ -2,28 +2,12 @@
 
 ## Motivation
 
-Provide the capavilities to actors to be render using the vue framework.
+Provide the capabilities to actors to be render using the vue framework.
 
 ## Installation
 
 add it to your project using `npm install tarant-vue --save` or `yarn add tarant-vue`
-import { VueActor } from "../Models/VueActor";
 
-export default class AppActor extends VueActor {
-    constructor() {
-      super("#app")
-      setInterval(() => {
-        ++this.counter;
-        this.message = "counter: " + this.counter
-      } , 1000)
-    }
-  
-    private counter = 0; 
-  
-    readonly template : string = "<div>{{message}}</div>"
-    public message : string = ""
-  
-  }
 ## Usage
 
 Extend the vue actor with a template and the properties to bind to the id of the actor will relate to the html component id
