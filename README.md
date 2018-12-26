@@ -1,5 +1,16 @@
 # ![logomakr_3zswgm](https://user-images.githubusercontent.com/3071208/50431626-dfd3f180-0891-11e9-9e18-d50539670810.png)
 
+
+[![npm](https://img.shields.io/npm/v/tarant.svg)](https://www.npmjs.com/package/tarant)
+[![Build Status](https://travis-ci.org/tarantx/tarant.svg?branch=master)](https://travis-ci.org/tarantx/tarant)
+[![Coverage Status](https://coveralls.io/repos/github/tarantx/tarant/badge.svg?branch=master)](https://coveralls.io/github/tarantx/tarant?branch=master)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+![issues Welcome](https://img.shields.io/badge/issues-welcome-brightgreen.svg)
+![npm](https://img.shields.io/npm/l/tarant.svg)
+![GitHub issues](https://img.shields.io/github/issues/tarantx/tarant.svg)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/tarantx/tarant.svg)
+![Downloads](https://img.shields.io/npm/dt/tarant.svg)
+
 ## Motivation
 
 Provide the capabilities to actors to be render using the vue framework.
