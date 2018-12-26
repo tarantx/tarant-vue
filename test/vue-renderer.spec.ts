@@ -1,5 +1,5 @@
 const mockVue = {}
-jest.mock('vue', () => ({ default: jest.fn(() => mockVue) }))
+jest.mock('vue', () => ({ __esModule: true, default: jest.fn(() => mockVue) }))
 import { VueRenderer } from '../lib/vue-renderer'
 import { VueActor } from '../lib/vue-actor'
 import Vue from 'vue'

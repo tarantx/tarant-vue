@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "esModuleInterop": true,
     "target": "es5",
     "module": "commonjs",
     "declaration": true,
@@ -7,6 +8,6 @@
     "strict": true,
     "importHelpers": true
   },
-  "include": ["lib"],
-  "exclude": ["node_modules", "**/test/*"]
+  "include": ["lib/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }
