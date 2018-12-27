@@ -5,9 +5,15 @@ import { VueActor } from '../lib/vue-actor'
 import Vue from 'vue'
 import * as faker from 'faker'
 
+abstract class TestActorWithMethod extends VueActor {
+  public method(): void {
+    return
+  }
+}
+
 describe('VueRenderer', () => {
   it('should bind with vue in initialize', () => {
-    const fakeActor = jest.fn<VueActor>(() => ({
+    const fakeActor = jest.fn<TestActorWithMethod>(() => ({
       id: faker.random.uuid(),
       template: faker.random.uuid(),
     }))
@@ -19,6 +25,9 @@ describe('VueRenderer', () => {
       data: fakeActorInstance,
       el: fakeActorInstance.id,
       template: fakeActorInstance.template,
+      methods: {
+        method: fakeActorInstance.method,
+      },
     })
   })
 })

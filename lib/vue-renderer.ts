@@ -1,13 +1,25 @@
-import { ActorMessage, IMaterializer } from 'tarant'
+import { ActorMessage } from 'tarant'
 import Vue from 'vue'
 import { VueActor } from './vue-actor'
 
-export class VueRenderer implements IMaterializer {
+const toObject = (arr: any[]) =>
+  arr.reduce((prev, cur) => {
+    prev[cur.name] = cur.fn
+    return prev
+  }, {})
+
+export class VueRenderer {
   public onInitialize(actor: VueActor): void {
-    // tslint:disable-next-line:no-unused-expression
-    new Vue({
+    const methods = Object.keys(actor.constructor.prototype).filter(
+      key => typeof actor.constructor.prototype[key] === 'function',
+    );
+
+    (actor as any)._vue = new Vue({
       data: actor,
       el: actor.id,
+      methods: toObject(
+        methods.map(method => ({ name: method, fn: (actor as any)[method] })),
+      ),
       template: actor.template,
     })
   }

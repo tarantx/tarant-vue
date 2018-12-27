@@ -8,6 +8,6 @@
     "strict": true,
     "importHelpers": true
   },
-  "include": ["lib/**/*"],
+  "files": ["./lib/index.ts"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }
