@@ -12,13 +12,15 @@ export class VueRenderer {
   public onInitialize(actor: VueActor): void {
     const methods = Object.keys(actor.constructor.prototype).filter(
       key => typeof actor.constructor.prototype[key] === 'function',
-    );
+    )
 
-    (actor as any)._vue = new Vue({
+    const actorAsAny = (actor as any)
+    actorAsAny.__internals = actorAsAny.__internals || {}
+    actorAsAny.__internals.vue = new Vue({
       data: actor,
       el: actor.id,
       methods: toObject(
-        methods.map(method => ({ name: method, fn: (actor as any)[method] })),
+        methods.map(method => ({ name: method, fn: actorAsAny.self[method] })),
       ),
       template: actor.template,
     })
