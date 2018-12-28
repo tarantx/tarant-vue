@@ -14,14 +14,12 @@ export class VueRenderer {
       key => typeof actor.constructor.prototype[key] === 'function',
     )
 
-    const actorAsAny = (actor as any)
+    const actorAsAny = actor as any
     actorAsAny.__internals = actorAsAny.__internals || {}
     actorAsAny.__internals.vue = new Vue({
       data: actor,
       el: actor.id,
-      methods: toObject(
-        methods.map(method => ({ name: method, fn: actorAsAny.self[method] })),
-      ),
+      methods: toObject(methods.map(method => ({ name: method, fn: actorAsAny.self[method] }))),
       template: actor.template,
     })
   }
