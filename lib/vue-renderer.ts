@@ -18,7 +18,7 @@ export class VueRenderer {
     actorAsAny.__internals = actorAsAny.__internals || {}
     actorAsAny.__internals.vue = new Vue({
       data: actor,
-      el: actor.id,
+      el: `#${actor.id}`,
       methods: toObject(methods.map(method => ({ name: method, fn: actorAsAny.self[method] }))),
       template: actor.template,
     })
