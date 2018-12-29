@@ -23,7 +23,7 @@ describe('VueRenderer', () => {
     renderer.onInitialize(fakeActorInstance)
     expect(Vue).toBeCalledWith({
       data: fakeActorInstance,
-      el: fakeActorInstance.id,
+      el: `#${fakeActorInstance.id}`,
       template: fakeActorInstance.template,
       methods: {
         method: fakeActorInstance.method,
