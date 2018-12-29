@@ -3484,10 +3484,10 @@ tar@^4:
     safe-buffer "^5.1.2"
     yallist "^3.0.2"
 
-tarant@2.5.6:
-  version "2.5.6"
-  resolved "https://registry.yarnpkg.com/tarant/-/tarant-2.5.6.tgz#6085a8e40ecc7232d5b925de8943d86f140c6366"
-  integrity sha512-ZsVZtuXXTyadDiMUlZSDFYAmn8o9wO3jTaQEegjo4Ig1G7Mih4+eCSzlMBaYgfTJECSJT78T9AYywRZi0oY2QQ==
+tarant@2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/tarant/-/tarant-2.6.1.tgz#1c5e149a74688a89b67238cc9ba02de6a885df77"
+  integrity sha512-BiynP4awrroundyRxevk8KfEtfV3DAsoVDWgo1gFSu2HY+L/SWFwACrHDK0E+gxLxnvyLjVMiVDzOhl272ub5Q==
   dependencies:
     tslib "1.9.3"
 
