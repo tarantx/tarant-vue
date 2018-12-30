@@ -9,11 +9,12 @@ const toObject = (arr: any[]) =>
   }, {})
 
 export class VueRenderer {
-  public onInitialize(actor: Actor): void {
-    if (!(actor instanceof VueActor)) {
+  public onInitialize(baseActor: Actor): void {
+    if (!(baseActor as any).__isVueActor) {
       return
     }
 
+    const actor = baseActor as VueActor
     const methods = Object.keys(actor.constructor.prototype).filter(
       key => typeof actor.constructor.prototype[key] === 'function',
     )

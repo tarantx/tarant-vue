@@ -14,6 +14,7 @@ abstract class TestActorWithMethod extends VueActor {
 describe('VueRenderer', () => {
   it('should bind with vue in initialize', () => {
     const fakeActor = jest.fn<TestActorWithMethod>(() => ({
+      __isVueActor: true,
       id: faker.random.uuid(),
       template: faker.random.uuid(),
     }))
