@@ -1,4 +1,4 @@
-import { ActorMessage } from 'tarant'
+import { Actor, ActorMessage } from 'tarant'
 import Vue from 'vue'
 import { VueActor } from './vue-actor'
 
@@ -9,7 +9,11 @@ const toObject = (arr: any[]) =>
   }, {})
 
 export class VueRenderer {
-  public onInitialize(actor: VueActor): void {
+  public onInitialize(actor: Actor): void {
+    if (!(actor instanceof VueActor)) {
+      return
+    }
+
     const methods = Object.keys(actor.constructor.prototype).filter(
       key => typeof actor.constructor.prototype[key] === 'function',
     )
