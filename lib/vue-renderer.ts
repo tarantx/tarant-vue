@@ -9,23 +9,26 @@ const toObject = (arr: any[]) =>
   }, {})
 
 export class VueRenderer {
-  public onInitialize(baseActor: Actor): void {
-    if (!(baseActor as any).__isVueActor) {
-      return
-    }
-
+  public async onInitialize(baseActor: Actor): Promise<void> {
     const actor = baseActor as VueActor
-    const methods = Object.keys(actor.constructor.prototype).filter(
-      key => typeof actor.constructor.prototype[key] === 'function',
-    )
-
     const actorAsAny = actor as any
+    const template = await (actor as any).template()
+    const data = await (actor as any).data()
+    const filterList = ['constructor', "data", "template"]
+    const methods = (Object as any).entries(data.constructor.prototype).filter(
+        (entry: any) => {
+            return !(filterList as any).includes(entry[0])
+        }
+      ).reduce((accumulator: any, method: any) => {
+            accumulator[method[0]]=method[1]
+            return accumulator
+      }, {})
     actorAsAny.__internals = actorAsAny.__internals || {}
     actorAsAny.__internals.vue = new Vue({
-      data: actor,
+      data,
       el: `#${actor.id}`,
-      methods: toObject(methods.map(method => ({ name: method, fn: actorAsAny.self[method] }))),
-      template: actor.template,
+      methods,
+      template,
     })
   }
   public onBeforeMessage(actor: VueActor, message: ActorMessage): void {

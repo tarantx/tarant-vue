@@ -6,7 +6,8 @@
     "declaration": true,
     "outDir": "./dist",
     "strict": true,
-    "importHelpers": true
+    "importHelpers": true,
+    "lib": ["es6", "dom"]
   },
   "files": ["./lib/index.ts"],
   "exclude": ["node_modules", "**/*.spec.ts"]
