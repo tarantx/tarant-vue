@@ -1,6 +1,5 @@
-import { Actor, ActorMessage } from 'tarant'
+import { Actor, ActorMessage, IMaterializer } from 'tarant'
 import Vue from 'vue'
-import { VueActor } from './vue-actor'
 
 const toObject = (arr: any[]) =>
   arr.reduce((prev, cur) => {
@@ -8,33 +7,43 @@ const toObject = (arr: any[]) =>
     return prev
   }, {})
 
-export class VueRenderer {
+export class VueRenderer implements IMaterializer {
   public onInitialize(baseActor: Actor): void {
-    if (!(baseActor as any).__isVueActor) {
+    const actor = baseActor as any
+
+    let data
+    let template
+
+    try {
+      data = actor.data()
+      template = actor.template()
+    } catch (_) {
       return
     }
 
-    const actor = baseActor as VueActor
+    if (typeof template !== 'string' || typeof data !== 'object') {
+      return
+    }
+
     const methods = Object.keys(actor.constructor.prototype).filter(
       key => typeof actor.constructor.prototype[key] === 'function',
     )
 
-    const actorAsAny = actor as any
-    actorAsAny.__internals = actorAsAny.__internals || {}
-    actorAsAny.__internals.vue = new Vue({
-      data: actor,
+    actor.__internals = actor.__internals || {}
+    actor.__internals.vue = new Vue({
+      data: actor.data(),
       el: `#${actor.id}`,
-      methods: toObject(methods.map(method => ({ name: method, fn: actorAsAny.self[method] }))),
-      template: actor.template,
+      methods: toObject(methods.map(method => ({ name: method, fn: actor.self[method] }))),
+      template: actor.template(),
     })
   }
-  public onBeforeMessage(actor: VueActor, message: ActorMessage): void {
+  public onBeforeMessage(actor: Actor, message: ActorMessage): void {
     //
   }
-  public onAfterMessage(actor: VueActor, message: ActorMessage): void {
+  public onAfterMessage(actor: Actor, message: ActorMessage): void {
     //
   }
-  public onError(actor: VueActor, message: ActorMessage, error: any): void {
+  public onError(actor: Actor, message: ActorMessage, error: any): void {
     //
   }
 }
