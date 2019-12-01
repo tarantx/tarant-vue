@@ -15,11 +15,14 @@ describe('VueRenderer', () => {
   it('should bind with vue in initialize', () => {
     const expectedData = { [faker.random.uuid()]: faker.random.uuid() }
     const expectedTemplate = faker.random.uuid()
-    const fakeActor = jest.fn<TestActorWithMethod>(() => ({
-      id: faker.random.uuid(),
-      data: () => expectedData,
-      template: () => expectedTemplate,
-    }))
+    const fakeActor = jest.fn<TestActorWithMethod, []>(
+      () =>
+        ({
+          id: faker.random.uuid(),
+          data: () => expectedData,
+          template: () => expectedTemplate,
+        } as any),
+    )
     const renderer = new VueRenderer()
     const fakeActorInstance: any = new fakeActor()
 
