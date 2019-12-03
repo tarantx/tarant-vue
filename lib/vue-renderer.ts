@@ -26,7 +26,7 @@ export class VueRenderer implements IMaterializer {
     }
 
     const methods = Object.keys(localActor.constructor.prototype).filter(
-      key => typeof localActor.constructor.prototype[key] === 'function' && key !== 'constructor'
+      key => typeof localActor.constructor.prototype[key] === 'function' && key !== 'constructor',
     )
 
     localActor.__internals = localActor.__internals || {}
@@ -36,7 +36,6 @@ export class VueRenderer implements IMaterializer {
       methods: toObject(methods.map(method => ({ name: method, fn: localActor.self[method] }))),
       template
     })
-    console.log(localActor.__internals.vue)
   }
   public onBeforeMessage(actor: Actor, message: ActorMessage): void {
     //
