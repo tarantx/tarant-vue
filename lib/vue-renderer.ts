@@ -8,15 +8,15 @@ const toObject = (arr: any[]) =>
   }, {})
 
 export class VueRenderer implements IMaterializer {
-  public onInitialize(baseActor: Actor): void {
-    const actor = baseActor as any
+  public onInitialize(actor: Actor): void {
+    const localActor = actor as any
 
     let data
     let template
 
     try {
-      data = actor.data()
-      template = actor.template()
+      data = localActor.data()
+      template = localActor.template()
     } catch (_) {
       return
     }
@@ -25,17 +25,18 @@ export class VueRenderer implements IMaterializer {
       return
     }
 
-    const methods = Object.keys(actor.constructor.prototype).filter(
-      key => typeof actor.constructor.prototype[key] === 'function',
+    const methods = Object.keys(localActor.constructor.prototype).filter(
+      key => typeof localActor.constructor.prototype[key] === 'function' && key !== 'constructor'
     )
 
-    actor.__internals = actor.__internals || {}
-    actor.__internals.vue = new Vue({
-      data: actor.data(),
-      el: `#${actor.id}`,
-      methods: toObject(methods.map(method => ({ name: method, fn: actor.self[method] }))),
-      template: actor.template(),
+    localActor.__internals = localActor.__internals || {}
+    localActor.__internals.vue = new Vue({
+      data,
+      el: `#${localActor.id}`,
+      methods: toObject(methods.map(method => ({ name: method, fn: localActor.self[method] }))),
+      template
     })
+    console.log(localActor.__internals.vue)
   }
   public onBeforeMessage(actor: Actor, message: ActorMessage): void {
     //
