@@ -34,7 +34,7 @@ export class VueRenderer implements IMaterializer {
       data,
       el: `#${localActor.id}`,
       methods: toObject(methods.map(method => ({ name: method, fn: localActor.self[method] }))),
-      template
+      template,
     })
   }
   public onBeforeMessage(actor: Actor, message: ActorMessage): void {
