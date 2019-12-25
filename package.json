@@ -36,13 +36,13 @@
   "devDependencies": {
     "@types/faker": "4.1.8",
     "@types/jest": "24.0.24",
-    "@types/node": "12.12.21",
+    "@types/node": "13.1.0",
     "@types/vue": "2.0.0",
     "coveralls": "3.0.9",
     "faker": "4.1.0",
     "jest": "24.9.0",
     "prettier": "1.19.1",
-    "rollup": "1.27.13",
+    "rollup": "1.27.14",
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-builtins": "^2.1.2",
@@ -53,10 +53,10 @@
     "tslib": "1.10.0",
     "tslint": "5.20.1",
     "tslint-config-prettier": "1.18.0",
-    "typescript": "3.7.3"
+    "typescript": "3.7.4"
   },
   "dependencies": {
-    "tarant": "2.7.2",
+    "tarant": "2.7.4",
     "vue": "2.6.11"
   },
   "jest": {
