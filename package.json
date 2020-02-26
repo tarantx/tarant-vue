@@ -34,9 +34,9 @@
     "preversion": "yarn test"
   },
   "devDependencies": {
-    "@types/faker": "4.1.9",
-    "@types/jest": "25.1.2",
-    "@types/node": "13.7.2",
+    "@types/faker": "4.1.10",
+    "@types/jest": "25.1.3",
+    "@types/node": "13.7.6",
     "@types/vue": "2.0.0",
     "coveralls": "3.0.9",
     "faker": "4.1.0",
@@ -50,10 +50,10 @@
     "rollup-plugin-terser": "^5.2.0",
     "rollup-plugin-typescript2": "^0.26.0",
     "ts-jest": "25.2.1",
-    "tslib": "1.10.0",
+    "tslib": "1.11.0",
     "tslint": "6.0.0",
     "tslint-config-prettier": "1.18.0",
-    "typescript": "3.7.5"
+    "typescript": "3.8.2"
   },
   "dependencies": {
     "tarant": "2.7.9",
