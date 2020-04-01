@@ -26,14 +26,14 @@ export class VueRenderer implements IMaterializer {
     }
 
     const methods = Object.keys(localActor.constructor.prototype).filter(
-      key => typeof localActor.constructor.prototype[key] === 'function' && key !== 'constructor',
+      (key) => typeof localActor.constructor.prototype[key] === 'function' && key !== 'constructor',
     )
 
     localActor.__internals = localActor.__internals || {}
     localActor.__internals.vue = new Vue({
       data,
       el: `#${localActor.id}`,
-      methods: toObject(methods.map(method => ({ name: method, fn: localActor.self[method] }))),
+      methods: toObject(methods.map((method) => ({ name: method, fn: localActor.self[method] }))),
       template,
     })
   }
