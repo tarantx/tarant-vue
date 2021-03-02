@@ -19,9 +19,7 @@
   ],
   "scripts": {
     "prepare": "npm run build && npm run build:cdn",
-    "start": "esbuild lib/index.ts --bundle --servedir=www --outdir=www/js '--define:process.env.NODE_ENV=\"production\"'",
-    "build": "esbuild --platform=node --bundle lib/index.ts --outdir=dist --minify --sourcemap '--define:process.env.NODE_ENV=\"production\"'",
-    "build:cdn": "esbuild --bundle lib/index.ts --outdir=cdn --minify --sourcemap '--define:process.env.NODE_ENV=\"production\"'",
+    "build": "tsc",
     "format": "prettier --write \"**/*.ts\" && eslint --fix lib/**/*.ts",
     "lint": "eslint",
     "test": "npm run format && npm run lint && jest test",
