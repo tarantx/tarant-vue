@@ -6,13 +6,13 @@ const toObject = (arr: any[]) =>
     prev[cur.name] = cur.fn
     return prev
   }, {})
-
+/* tslint:disable */
 export class VueRenderer implements IMaterializer {
-  public onInitialize(actor: Actor): void {
+  public onInitialize (actor: Actor): void {
     const localActor = actor as any
 
-    let data
-    let template
+    let data: any
+    let template: (arg: any) => any
 
     try {
       data = localActor.data()
@@ -22,44 +22,60 @@ export class VueRenderer implements IMaterializer {
     }
 
     if (typeof template !== 'function' || typeof data !== 'object') {
-        return;
+      return
     }
-    
-    const allEvents = (props) => Object.entries(props)
+
+    const internalFunctions = ['data', 'template', 'constructor']
+    const isInternalFunction = (key: string) => internalFunctions.includes(key)
+
+    const allEvents = (props) =>
+      Object.entries(props)
         .filter(([key]) => key.startsWith('on'))
-        .map(([key, value]) => ({[key.substr(2).toLowerCase()]: value }))
-        .reduce((prev, newv) => ({...prev, ...newv }), {});
+        .map(([key, value]) => ({ [key.substr(2).toLowerCase()]: value }))
+        .reduce((prev, newv) => ({ ...prev, ...newv }), {})
 
-    const withoutEvents = (props) => Object.entries(props).filter(([key]) => !key.startsWith('on')).reduce((prev, newv) => ({...prev, ...newv }), {});
+    const withoutEvents = (props) =>
+      Object.entries(props)
+        .filter(([key]) => !key.startsWith('on'))
+        .reduce((prev, newv) => ({ ...prev, ...newv }), {})
 
-    function createElementProxy(createElement) {
-        return function (el, props, ...children) {
-            const data = { attrs: withoutEvents(props || {}), on: allEvents(props || {}) };
-            return createElement(el, data, children)
-        }
+    function createElementProxy (createElement) {
+      return function (el, props, ...children) {
+        const mappedProps = { attrs: withoutEvents(props || {}), on: allEvents(props || {}) }
+        return createElement(el, mappedProps, children)
+      }
     }
 
     const methods = Object.getOwnPropertyNames(localActor.constructor.prototype).filter(
-      (key) => typeof localActor.constructor.prototype[key] === 'function' && key !== 'constructor',
+      (key) => typeof localActor.constructor.prototype[key] === 'function' && !isInternalFunction(key)
     )
 
     localActor.__internals = localActor.__internals || {}
     localActor.__internals.vue = new Vue({
-      data: { state: data } ,
+      data: { state: data },
       el: `#${localActor.id}`,
-      methods: toObject(methods.map((method) => ({ name: method, fn: localActor.self[method] }))),
-      render: function (createElement) {  
-          return template.call(this, createElementProxy(createElement)) 
-      },,
+      methods: toObject(
+        methods
+          .filter((method) => localActor.self[method])
+          .map((method) => {
+            return { name: method, fn: localActor.self[method] }
+          })
+      ),
+      render (createElement) {
+        return template.call(this, createElementProxy(createElement))
+      }
     })
   }
-  public onBeforeMessage(actor: Actor, message: ActorMessage): void {
+
+  public onBeforeMessage (actor: Actor, message: ActorMessage): void {
     //
   }
-  public onAfterMessage(actor: Actor, message: ActorMessage): void {
+
+  public onAfterMessage (actor: Actor, message: ActorMessage): void {
     //
   }
-  public onError(actor: Actor, message: ActorMessage, error: any): void {
+
+  public onError (actor: Actor, message: ActorMessage, error: any): void {
     //
   }
 }

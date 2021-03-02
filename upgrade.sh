@@ -10,12 +10,12 @@ git remote add origin-master https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.
 git fetch origin-master
 git checkout -b master-local origin-master/master
 
-yarn upgrade --latest
+npm upgrade --latest
 git add .
 git commit --allow-empty -m "updated dependencies [skip ci]"
 
-yarn test
-yarn deploy:patch
+npm test
+npm run deploy:patch
 
 git push --quiet origin-master master-local:master
 git push --quiet origin-master master-local:master --tags
