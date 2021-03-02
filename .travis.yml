@@ -13,11 +13,5 @@ deploy:
     api_key: $NPM_TOKEN
     on:
       tags: true
-  - provider: releases
-    skip_cleanup: true
-    file_glob: true
-    file: cdn/*.js
-    api_key: $GH_TOKEN
-    on:
-      tags: true
+
   
