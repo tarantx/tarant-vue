@@ -16,13 +16,27 @@ export class VueRenderer implements IMaterializer {
 
     try {
       data = localActor.data()
-      template = localActor.template()
+      template = localActor.template
     } catch (_) {
       return
     }
 
-    if (typeof template !== 'string' || typeof data !== 'object') {
-      return
+    if (typeof template !== 'function' || typeof data !== 'object') {
+        return;
+    }
+    
+    const allEvents = (props) => Object.entries(props)
+        .filter(([key]) => key.startsWith('on'))
+        .map(([key, value]) => ({[key.substr(2).toLowerCase()]: value }))
+        .reduce((prev, newv) => ({...prev, ...newv }), {});
+
+    const withoutEvents = (props) => Object.entries(props).filter(([key]) => !key.startsWith('on')).reduce((prev, newv) => ({...prev, ...newv }), {});
+
+    function createElementProxy(createElement) {
+        return function (el, props, ...children) {
+            const data = { attrs: withoutEvents(props || {}), on: allEvents(props || {}) };
+            return createElement(el, data, children)
+        }
     }
 
     const methods = Object.getOwnPropertyNames(localActor.constructor.prototype).filter(
@@ -31,10 +45,12 @@ export class VueRenderer implements IMaterializer {
 
     localActor.__internals = localActor.__internals || {}
     localActor.__internals.vue = new Vue({
-      data,
+      data: { state: data } ,
       el: `#${localActor.id}`,
       methods: toObject(methods.map((method) => ({ name: method, fn: localActor.self[method] }))),
-      template,
+      render: function (createElement) {  
+          return template.call(this, createElementProxy(createElement)) 
+      },,
     })
   }
   public onBeforeMessage(actor: Actor, message: ActorMessage): void {
