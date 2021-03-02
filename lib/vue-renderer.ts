@@ -25,7 +25,7 @@ export class VueRenderer implements IMaterializer {
       return
     }
 
-    const methods = Object.keys(localActor.constructor.prototype).filter(
+    const methods = Object.getOwnPropertyNames(localActor.constructor.prototype).filter(
       (key) => typeof localActor.constructor.prototype[key] === 'function' && key !== 'constructor',
     )
 
