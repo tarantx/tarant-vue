@@ -51,7 +51,8 @@
     "faker": "4.1.0",
     "jest": "26.0.1",
     "prettier": "2.0.5",
-    "ts-jest": "26.0.0"
+    "ts-jest": "26.0.0",
+    "tslib": "^1.14.1"
   },
   "dependencies": {
     "tarant": "2.7.66",
