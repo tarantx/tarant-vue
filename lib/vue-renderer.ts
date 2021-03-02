@@ -49,7 +49,6 @@ export class VueRenderer implements IMaterializer {
     const methods = Object.getOwnPropertyNames(localActor.constructor.prototype).filter(
       (key) => typeof localActor.constructor.prototype[key] === 'function' && !isInternalFunction(key)
     )
-    console.log('RENDER!!!')
 
     localActor.__internals = localActor.__internals || {}
     localActor.__internals.vue = new Vue({
