@@ -8,7 +8,7 @@ const toObject = (arr: any[]) =>
   }, {})
 /* tslint:disable */
 export class VueRenderer implements IMaterializer {
-  public onInitialize (actor: Actor): void {
+  public onInitialize(actor: Actor): void {
     const localActor = actor as any
 
     let data: any
@@ -39,7 +39,7 @@ export class VueRenderer implements IMaterializer {
         .filter(([key]) => !key.startsWith('on'))
         .reduce((prev, newv) => ({ ...prev, ...newv }), {})
 
-    function createElementProxy (createElement) {
+    function createElementProxy(createElement) {
       return function (el, props, ...children) {
         const mappedProps = { attrs: withoutEvents(props || {}), on: allEvents(props || {}) }
         return createElement(el, mappedProps, children)
@@ -47,7 +47,7 @@ export class VueRenderer implements IMaterializer {
     }
 
     const methods = Object.getOwnPropertyNames(localActor.constructor.prototype).filter(
-      (key) => typeof localActor.constructor.prototype[key] === 'function' && !isInternalFunction(key)
+      (key) => typeof localActor.constructor.prototype[key] === 'function' && !isInternalFunction(key),
     )
 
     localActor.__internals = localActor.__internals || {}
@@ -59,23 +59,23 @@ export class VueRenderer implements IMaterializer {
           .filter((method) => localActor.self[method])
           .map((method) => {
             return { name: method, fn: localActor.self[method] }
-          })
+          }),
       ),
-      render (createElement) {
+      render(createElement) {
         return template.call(this, createElementProxy(createElement))
-      }
+      },
     })
   }
 
-  public onBeforeMessage (actor: Actor, message: ActorMessage): void {
+  public onBeforeMessage(actor: Actor, message: ActorMessage): void {
     //
   }
 
-  public onAfterMessage (actor: Actor, message: ActorMessage): void {
+  public onAfterMessage(actor: Actor, message: ActorMessage): void {
     //
   }
 
-  public onError (actor: Actor, message: ActorMessage, error: any): void {
+  public onError(actor: Actor, message: ActorMessage, error: any): void {
     //
   }
 }
