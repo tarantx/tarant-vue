@@ -1,18 +1,18 @@
 const mockVue = {}
-jest.mock('vue', () => ({ __esModule: true, default: jest.fn(() => mockVue) }))
+jest.mock('vue', () => ({ __esModule: true, createApp: jest.fn(() => mockVue) }))
 import { VueRenderer } from '../lib/vue-renderer'
-import Vue from 'vue'
-import * as faker from 'faker'
+import { createApp } from 'vue'
+import { faker } from '@faker-js/faker'
 import { Actor } from 'tarant'
 
 describe('VueRenderer', () => {
   it('should bind with vue in initialize', () => {
-    const expectedData = { [faker.random.uuid()]: faker.random.uuid() }
-    const expectedTemplate = faker.random.uuid()
+    const expectedData = { [faker.datatype.uuid()]: faker.datatype.uuid() }
+    const expectedTemplate = faker.datatype.uuid()
 
     class TestActorWithMethod extends Actor {
       constructor() {
-        super(faker.random.uuid())
+        super(faker.datatype.uuid())
       }
 
       public method(): void {
@@ -33,8 +33,8 @@ describe('VueRenderer', () => {
     fakeActorInstance.self = fakeActorInstance
 
     renderer.onInitialize(fakeActorInstance)
-    expect(Vue).toBeCalledWith({
-      data: { state: expectedData },
+    expect(createApp).toBeCalledWith({
+      data: expect.anything(),
       el: `#${fakeActorInstance.id}`,
       render: expect.anything(),
       methods: {

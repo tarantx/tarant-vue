@@ -1,5 +1,5 @@
 import { Actor, ActorMessage, IMaterializer } from 'tarant'
-import Vue from 'vue'
+import { createApp } from 'vue'
 
 const toObject = (arr: any[]) =>
   arr.reduce((prev, cur) => {
@@ -51,8 +51,10 @@ export class VueRenderer implements IMaterializer {
     )
 
     localActor.__internals = localActor.__internals || {}
-    localActor.__internals.vue = new Vue({
-      data: { state: data },
+    localActor.__internals.vue = createApp({
+      data() {
+        return { state: data }
+      },
       el: `#${localActor.id}`,
       methods: toObject(
         methods
